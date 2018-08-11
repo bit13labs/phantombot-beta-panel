@@ -26,8 +26,8 @@ node ("docker") {
 	env.PROJECT_MINOR_VERSION = MINOR_VERSION
 
 	env.CI_BUILD_VERSION = Branch.getSemanticVersion(this)
-	env.CI_DOCKER_ORGANIZATION = Accounts.GIT_ORGANIZATION
 	env.CI_DOCKER_ORGANIZATION = "bit13labs"
+	env.CI_ORGANIZATION = "bit13labs"
 	env.CI_PROJECT_NAME = ProjectName
 	currentBuild.result = "SUCCESS"
 
