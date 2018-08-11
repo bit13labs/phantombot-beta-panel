@@ -1,0 +1,36 @@
+<main>
+    <!-- Header -->
+    <section class="content-header">
+        <h1>Commands</h1>
+        <ol class="breadcrumb">
+            <li><a href="javascript:void(0);"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li>Commands</li>
+            <li class="active">Aliases</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    	<div class="box box-solid">
+            <div class="box-header with-border">
+            	<label class="switch" data-toggle="tooltip" title="Module toggle">
+  					<input type="checkbox" id="aliasesModuleToggle" checked="true">
+  					<span class="slider round"></span>
+				</label>
+
+                <h3 class="box-title">Command Aliases</h3>
+            </div>
+            <form role="form" id="aliasesModule">
+                <!-- Box content -->
+                <div class="box-body">
+                    <button class="btn btn-primary btn-sm pull-right" type="button" id="aliascom-button"><i class="fa fa-plus"></i>&nbsp; Add Alias</button>
+
+                    <table id="aliasesTable" class="table table-bordered table-hover"></table>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- aliases -->
+    <script src="beta-panel/js/pages/commands/aliases.js"></script>
+</main>
