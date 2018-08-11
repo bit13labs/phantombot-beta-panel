@@ -27,6 +27,7 @@ node ("docker") {
 
 	env.CI_BUILD_VERSION = Branch.getSemanticVersion(this)
 	env.CI_DOCKER_ORGANIZATION = Accounts.GIT_ORGANIZATION
+	env.CI_DOCKER_ORGANIZATION = "bit13labs"
 	env.CI_PROJECT_NAME = ProjectName
 	currentBuild.result = "SUCCESS"
 
@@ -40,7 +41,7 @@ node ("docker") {
 													usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
 						stage ("install" ) {
 							deleteDir()
-							Branch.checkout(this, env.CI_PROJECT_NAME)
+							Branch.checkout(this, env.CI_PROJECT_NAME, env.CI_DOCKER_ORGANIZATION)
 							Pipeline.install(this)
 						}
 						stage ("lint") {
@@ -61,7 +62,7 @@ node ("docker") {
 							Pipeline.publish_buildInfo(this)
 							Pipeline.upload_artifact(this, "dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", "generic-local/${env.CI_PROJECT_NAME}/${env.CI_BUILD_VERSION}/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", "")
 							Pipeline.upload_artifact(this, "dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", "generic-local/${env.CI_PROJECT_NAME}/latest/${env.CI_PROJECT_NAME}-latest.zip", "")
-							Pipeline.publish_github(this, Accounts.GIT_ORGANIZATION, env.CI_PROJECT_NAME, env.CI_BUILD_VERSION, "${WORKSPACE}/dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", false, false)
+							Pipeline.publish_github(this, env.CI_ORGANIZATION, env.CI_PROJECT_NAME, env.CI_BUILD_VERSION, "${WORKSPACE}/dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", false, false)
 						}
 					}
 				}
