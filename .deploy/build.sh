@@ -43,7 +43,7 @@ WORKDIR="${WORKSPACE:-"$(pwd)"}";
 
 mkdir -p "${WORKDIR}/dist/";
 pushd . || exit 9;
-cd "${WORKDIR}/src" || exit 9;
+cd "${WORKDIR}/beta-panel" || exit 9;
 
 zip -r "${BUILD_PROJECT}-${BUILD_VERSION}.zip" -- *
 mv "${BUILD_PROJECT}-${BUILD_VERSION}.zip" "${WORKDIR}/dist/";
