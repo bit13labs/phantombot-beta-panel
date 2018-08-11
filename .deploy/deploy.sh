@@ -39,3 +39,9 @@ WORKDIR="${WORKSPACE:-"${pwd}"}";
 [[ -z "${BUILD_VERSION// }" ]] && __error "Environment variable 'CI_BUILD_VERSION' missing or empty.";
 [[ -z "${BUILD_ORG// }" ]] && __error "Argument '-o' (organization) is missing or empty.";
 [[ -z "${BUILD_PUSH_REGISTRY// }" ]] && __error "Environment variable 'DOCKER_REGISTRY' missing or empty.";
+
+
+unset BUILD_PROJECT;
+unset BUILD_PUSH_REGISTRY;
+unset BUILD_VERSION;
+unset BUILD_ORG;

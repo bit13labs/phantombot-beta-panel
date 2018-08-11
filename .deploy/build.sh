@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e;
+
 base_dir=$(dirname "$0");
 # shellcheck source=/dev/null
 source "${base_dir}/shared.sh";
@@ -40,11 +41,16 @@ WORKDIR="${WORKSPACE:-"$(pwd)"}";
 [[ -z "${ARTIFACTORY_USERNAME// }" ]] && __error "Environment variable 'ARTIFACTORY_USERNAME' missing or empty.";
 [[ -z "${ARTIFACTORY_PASSWORD// }" ]] && __error "Environment variable 'ARTIFACTORY_PASSWORD' missing or empty.";
 
-
-mkdir -p "${WORKSPACE}/dist/";
+mkdir -p "${WORKDIR}/dist/";
 pushd . || exit 9;
-cd "${WORKSPACE}/beta-panel" || exit 9;
-pwd;
-zip -r "${PROJECT_NAME}-${BUILD_VERSION}.zip" -- *;
-mv "${PROJECT_NAME}-${BUILD_VERSION}.zip" "${WORKSPACE}/dist/";
+cd "${WORKDIR}/src" || exit 9;
+
+zip -r "${BUILD_PROJECT}-${BUILD_VERSION}.zip" -- *
+mv "${BUILD_PROJECT}-${BUILD_VERSION}.zip" "${WORKDIR}/dist/";
+
 popd || exit 9;
+
+unset BUILD_PROJECT;
+unset BUILD_PUSH_REGISTRY;
+unset BUILD_VERSION;
+unset BUILD_ORG;

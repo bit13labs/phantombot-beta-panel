@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e;
+# shopt -s globstar;
 
 base_dir=$(dirname "$0");
 # shellcheck source=/dev/null
@@ -33,6 +34,4 @@ docker run --rm \
   -v "${WORKDIR}":/lint \
   -w /lint hyzual/jshint root/scripts/ --verbose;
 
-
-# __info "Running Phantombot lint";
-# docker run --rm -v ${WORKDIR}:/source nacyot/javascript-rhino:apt rhino -f "/source/root/tests/index.js";
+# shopt -u globstar;

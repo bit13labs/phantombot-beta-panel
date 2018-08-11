@@ -9,6 +9,7 @@ if(env.BRANCH_NAME ==~ /master$/) {
 node ("docker") {
 	def ProjectName = "phantombot-beta-panel"
 	def slack_notify_channel = null
+
 	def MAJOR_VERSION = 1
 	def MINOR_VERSION = 0
 
@@ -25,8 +26,7 @@ node ("docker") {
 	env.PROJECT_MINOR_VERSION = MINOR_VERSION
 
 	env.CI_BUILD_VERSION = Branch.getSemanticVersion(this)
-	env.CI_DOCKER_ORGANIZATION = "bit13labs"
-	env.CI_DOCKER_ORGANIZATION = "bit13labs"
+	env.CI_DOCKER_ORGANIZATION = Accounts.GIT_ORGANIZATION
 	env.CI_PROJECT_NAME = ProjectName
 	currentBuild.result = "SUCCESS"
 
@@ -40,7 +40,7 @@ node ("docker") {
 													usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
 						stage ("install" ) {
 							deleteDir()
-							Branch.checkout(this, env.CI_PROJECT_NAME, env.CI_DOCKER_ORGANIZATION)
+							Branch.checkout(this, env.CI_PROJECT_NAME)
 							Pipeline.install(this)
 						}
 						stage ("lint") {
@@ -57,14 +57,11 @@ node ("docker") {
 						}
 						stage ('publish') {
 							// this only will publish if the incominh branch IS develop
-							sh script:  "${WORKSPACE}/.deploy/validate.sh -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'"
-
 							Branch.publish_to_master(this)
 							Pipeline.publish_buildInfo(this)
-
-							Pipeline.publish_github(this, env.CI_ORGANIZATION, env.CI_PROJECT_NAME, env.CI_BUILD_VERSION,
-								"${WORKSPACE}/dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", false, false)
-						
+							Pipeline.upload_artifact(this, "dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", "generic-local/${env.CI_PROJECT_NAME}/${env.CI_BUILD_VERSION}/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", "")
+							Pipeline.upload_artifact(this, "dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", "generic-local/${env.CI_PROJECT_NAME}/latest/${env.CI_PROJECT_NAME}-latest.zip", "")
+							Pipeline.publish_github(this, Accounts.GIT_ORGANIZATION, env.CI_PROJECT_NAME, env.CI_BUILD_VERSION, "${WORKSPACE}/dist/${env.CI_PROJECT_NAME}-${env.CI_BUILD_VERSION}.zip", false, false)
 						}
 					}
 				}
