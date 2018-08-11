@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e;
-shopt -s globstar;
 
 base_dir=$(dirname "$0");
 # shellcheck source=/dev/null
