@@ -4,10 +4,9 @@
 
 $(function() {
 	var webSocket = new WebSocket(
-		(getProtocol() === 'https://' || 
-			window.location.protocol === 'https:' ? 'wss://' : 'ws://'
-		) + getPhantomBotHost().split(':')[0] + ':' + getPanelPort()
-	),
+		(getProtocol() === 'https://' || window.location.protocol === 'https:' ? 'wss://' : 'ws://') + 
+			window.location.host.split(':')[0] + ':' + 
+			getPanelPort()),
 		callbacks = [],
 		listeners = [],
 		socket = {};
