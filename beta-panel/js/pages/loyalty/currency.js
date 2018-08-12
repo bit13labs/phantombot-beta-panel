@@ -231,7 +231,7 @@ $(function() {
 					});
 			}
 		} else {
-			let groups = ['caster', 'administrator', 'moderator', 'subscriber', 'subscriber2', 'subscriber3', 'donator', 'regular', 'viewer'],
+			let groups = ['caster', 'administrator', 'moderator', 'subscriber', 'donator', 'regular', 'viewer'],
 				temp = [];
 
 			// Make sure that all groups have a value.
@@ -254,7 +254,7 @@ $(function() {
 			// Update the DB.
 			socket.updateDBValues('update_group_payout_online', {
 				tables: ['grouppoints', 'grouppoints', 'grouppoints', 'grouppoints', 'grouppoints', 'grouppoints', 'grouppoints'],
-				keys: ['Caster', 'Administrator', 'Moderator', 'Subscriber', 'Subscriber2', 'Subscriber3','Donator', 'Regular', 'Viewer'],
+				keys: ['Caster', 'Administrator', 'Moderator', 'Subscriber','Donator', 'Regular', 'Viewer'],
 				values: temp
 			}, function() {
 				temp = [];
@@ -267,7 +267,7 @@ $(function() {
 				// Update the DB.
 				socket.updateDBValues('update_group_payout_offline', {
 					tables: ['grouppointsoffline', 'grouppointsoffline', 'grouppointsoffline', 'grouppointsoffline', 'grouppointsoffline', 'grouppointsoffline', 'grouppointsoffline'],
-					keys: ['Caster', 'Administrator', 'Moderator', 'Subscriber', 'Subscriber2', 'Subscriber3','Donator', 'Regular', 'Viewer'],
+					keys: ['Caster', 'Administrator', 'Moderator', 'Subscriber','Donator', 'Regular', 'Viewer'],
 					values: temp
 				}, function() {
 					toastr.success('Successfully updated advanced points settings!');
